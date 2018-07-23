@@ -1,7 +1,11 @@
-## web system
 
-### backend 
+## develop
 
 ```
-python web_server.py
+npm run start
+```
+
+## build
+```
+npm run build
 ```
