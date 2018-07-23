@@ -114,6 +114,6 @@ datas/
 
 
 
-methods/
+methods/*
 
-!methods/nlp_hw3
+
