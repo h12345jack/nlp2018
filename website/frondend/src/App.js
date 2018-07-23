@@ -29,6 +29,8 @@ import ReportIcon from '@material-ui/icons/Report';
 
 
 import Results from './pages/Results';
+import Description from './pages/Description';
+import System from './pages/System';
 
 const drawerWidth = 240;
 
@@ -37,7 +39,6 @@ const styles = theme => ({
     flexGrow: 1,
   },
   appFrame: {
-    height: 430,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -90,6 +91,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    marginTop: 50,
+    paddingLeft: '20%',
+    paddingRight: '20%',
   },
   'content-left': {
     marginLeft: -drawerWidth,
@@ -115,6 +119,7 @@ class App extends Component {
   state = {
     open: false,
     anchor: 'left',
+    pages: 'system',
   };
 
   handleDrawerOpen = () => {
@@ -144,19 +149,19 @@ class App extends Component {
           </IconButton>
         </div>
         <Divider />
-        <ListItem button>
+        <ListItem button onClick={()=>{this.setState({pages: 'system'})}}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="System" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={()=>{this.setState({pages: 'description'})}}>
           <ListItemIcon>
             <DescriptionIcon />
           </ListItemIcon>
           <ListItemText primary="Details" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={()=>{this.setState({pages: 'results'})}}>
           <ListItemIcon>
             <InsertChartOutlinedIcon />
           </ListItemIcon>
@@ -208,9 +213,11 @@ class App extends Component {
               [classes[`contentShift-${anchor}`]]: open,
             })}
           >
-            <div className={classes.drawerHeader} />
-            <Typography>{'You think water moves fast? You should see ice.'}</Typography>
-            <Results />
+            {/* <div className={classes.drawerHeader} /> */}
+            {this.state.pages === 'results' && <Results />}
+            {this.state.pages === 'description' && <Description/>} 
+            {this.state.pages === 'system' && <System/>}    
+
           </main>
           {after}
         </div>
