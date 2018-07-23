@@ -13,15 +13,29 @@
 - [ ] [NLPCC2016-WordSeg-Weibo](https://github.com/FudanNLP/NLPCC-WordSeg-Weibo)
 
 ## methods
-- [ ] perceptron
-- [ ] crf
-- [ ] Bi-LSTM
-- [ ] HMM 
+- [-] 最大正向匹配 hjj
+- [-] perceptron hjj
+- [-] CRF++ wj
+- [ ] Bi-LSTM hl&hjj
+- [ ] HMM & hl
+- [ ] Bi-LSTM+CRF hl
+
+
+## 实验：
+PKU MSRA
+WeiBo，领域自适应
 
 ## System Design
 
 - [ ] SPA-Form Page
 - [ ] Results Page
 
+UI和WebDM类似
+反馈机制，前端
+
+
 ## Acknowledge
-This project thanks 
+
+###  相关资料
+https://github.com/hankcs/multi-criteria-cws
+http://jkx.fudan.edu.cn/~qzhang/paper/aaai2017-cws.pdf
