@@ -1,4 +1,4 @@
-#NLP2018 UCAS
+# NLP2018 UCAS
 
 ## Description
 > 实现一个汉语自动分词系统（Chinese word segmentation）
