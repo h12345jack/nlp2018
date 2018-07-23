@@ -7,8 +7,6 @@ const input = `
 ## 数据集
 1.  [SIGHAN](http://sighan.cs.uchicago.edu/bakeoff2005/)
 2.  [NLPCC 2016 微博分词](https://github.com/FudanNLP/NLPCC-WordSeg-Weibo)
-
-## 结果
 `
 
 
