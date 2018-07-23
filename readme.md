@@ -13,9 +13,9 @@
 - [ ] [NLPCC2016-WordSeg-Weibo](https://github.com/FudanNLP/NLPCC-WordSeg-Weibo)
 
 ## methods
-- [-] 最大正向匹配 hjj
-- [-] perceptron hjj
-- [-] CRF++ wj
+- [x] 最大正向匹配 hjj
+- [x] perceptron hjj
+- [x] CRF++ wj
 - [ ] Bi-LSTM hl&hjj
 - [ ] HMM & hl
 - [ ] Bi-LSTM+CRF hl
