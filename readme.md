@@ -7,10 +7,13 @@
 行测试分析。如果在本题目中不考虑命名实体识别问题，歧义消解和集外词
 处理是汉语自动分词中的关键问题
 
-## Datas 
-- [ ] [icwb2-data](http://sighan.cs.uchicago.edu/bakeoff2005/)
+## Data && Experiment
+1.  [icwb2-data](http://sighan.cs.uchicago.edu/bakeoff2005/)
 
-- [ ] [NLPCC2016-WordSeg-Weibo](https://github.com/FudanNLP/NLPCC-WordSeg-Weibo)
+2.  [NLPCC2016-WordSeg-Weibo](https://github.com/FudanNLP/NLPCC-WordSeg-Weibo)
+
+PKU MSR: 标准数据集
+Weibo: 非标准数据集
 
 ## Methods
 - [x] 最大正向匹配 hjj
@@ -19,12 +22,6 @@
 - [ ] Bi-LSTM hl&hjj
 - [x] HMM & hl
 - [ ] Bi-LSTM+CRF hl
-
-
-## Experiment：
-PKU MSRA: 标准数据集
-
-WeiBo： 非标准数据集
 
 ## System Design
 
