@@ -22,8 +22,6 @@ class AveragedPerceptron(object):
         # Number of instances seen
         self.i = 0
 
-    
-
     def predict(self, features):
         # print features
         '''Dot-product the features and current weights and return the best class.'''
@@ -66,16 +64,19 @@ class AveragedPerceptron(object):
                 if averaged:
                     new_feat_weights[clas] = averaged
             self.weights[feat] = new_feat_weights
-        return None
+        return 
 
     def save(self, path):
         '''Save the pickled model weights.'''
-        return pickle.dump(dict(self.weights), open(path, 'wb'))
+        with open(path, 'wb') as f:
+            pickle.dump(dict(self.weights), f)
+        return 
 
     def load(self, path):
         '''Load the pickled model weights.'''
-        self.weights = pickle.load(open(path, 'rb'))
-        return None
+        with open(path, 'rb') as f:
+            self.weights = pickle.load(f)
+        return 
 
 class Indexer(dict):
     def __init__(self, filename, mode='r'):
@@ -94,7 +95,7 @@ class Indexer(dict):
 
         if self.app_flag:
             if key not in self.dict:
-                self.dict[key]=len(self)
+                self.dict[key] = len(self.dict)
                 print(key, file = self.file)
                 self.file.flush()
             return self.dict[key]
@@ -102,129 +103,8 @@ class Indexer(dict):
             return self.dict.get(key,-1)
 
 
-class PerceptronCWS(object):
-    """docstring for PerceptronCWS."""
-    def __init__(self, train_src, train_dst):
-        super(PerceptronCWS, self).__init__()
-        self.train_src = train_src
-        self.train_dst = train_dst
-
-
-    def _to_tags(self, sen):
-        tags=[]
-        for w in sen:
-            if len(w) == 1:
-                tags.append('s')
-            else:
-                tags.append('b')
-                for i in range(len(w)-2):
-                    tags.append('m')
-                tags.append('e')
-        return tags
-
-
-    def gen_keys(self, seq, i):
-        '''产生feature'''
-        mid=seq[i]
-        left=seq[i-1] if i>0 else '#'
-        left2=seq[i-2] if i-1>0 else '#'
-        right=seq[i+1] if i+1<len(seq) else '#'
-        right2=seq[i+2] if i+2<len(seq) else '#'
-        return [mid+"_1",left+"_2",right+"_3",
-                left+mid+'_1',mid+right+'_2',
-                left2+left+'_3',right+right2+'_4']
-
-    def main_fea(self, src, index):
-        '''训练文件index文件'''
-        print('begin index...')
-        print('from', src, 'to', index)
-        inder = Indexer(index,'w') #build indexer
-        global_graph=[]
-
-        with open(src, encoding='utf8') as f:
-            for line in tqdm(f.readlines()):
-                line = line.strip().split()
-                seq = ''.join(line)
-                graph = []
-                fs = [[inder(k) for k in self.gen_keys(seq, x)] for x in range(len(seq))]
-        
-                for c,v in zip(self._to_tags(line),fs):
-                    graph.append([0,[],c,v])
-                if not graph:continue
-                graph[0][0]+=1;
-                graph[-1][0]+=2;
-                for i in range(1,len(graph)):
-                    graph[i][1]=[i-1]
-                global_graph.extend(graph)
-            return global_graph, len(inder.dict)
-
-    def test_fea(self, index, src):
-        inder = Indexer(index,'r')
-        global_graph=[]
-        with open(src,'r',encoding='utf8') as f:
-            for line in tqdm(f.readlines()):
-                seq=line.strip()
-                graph=[]
-                fs=[filter(lambda x:x>=0,[inder(k) for k in self.gen_keys(seq,x)]) for x in range(len(seq))]
-                for c,v in zip(self._to_tags(line),fs):
-                    graph.append([0,[],c,v])
-                if not graph:continue
-                graph[0][0]+=1
-                graph[-1][0]+=2
-                for i in range(1,len(graph)):
-                    graph[i][1]=[i-1]
-                global_graph.extend(graph)
-            return global_graph
-
-    def train(self, nr_iter, examples,length):
-        '''Return an averaged perceptron model trained on ``examples`` for
-        ``nr_iter`` iterations.
-        '''
-        tt=['b','e','s','m']
-        model = AveragedPerceptron()
-        for j in range(int(length)):
-            model.weights[str(j)]={tt[i]:0 for i in range(4)}
-        print('begin training...')
-        for i in tqdm(range(nr_iter)):
-            random.shuffle(examples)
-            for features, class_ in examples:
-                guess = model.predict(features)
-                if guess != class_:
-                    model.update(class_, guess, features)
-            print(i,'iter done')
-        model.average_weights()
-        return model
-
-    def train_it(self):
-        index_fpath = self.train_dst[:self.train_dst.rfind('.')] + '.index'
-        model_fpath = self.train_dst[:self.train_dst.rfind('.')] + '.model'
-        graph, length = self.main_fea(self.train_src, index_fpath)
-        examples = []
-        for i in graph:
-            examples.append((i[3], i[2]))
-        model = self.train(5, examples, length)
-        model.save(model_fpath)
-
-def test_fea(index, src):
-    inder = Indexer(index,'r')
-    global_graph=[]
-    with open(src,'r',encoding='utf8') as f:
-        for line in tqdm(f.readlines()):
-            seq=line.strip()
-            graph=[]
-            fs=[filter(lambda x:x>=0,[inder(k) for k in gen_keys(seq,x)]) for x in range(len(seq))]
-            for c,v in zip(_to_tags(line),fs):
-                graph.append([0,[],c,v])
-            if not graph:continue
-            graph[0][0]+=1
-            graph[-1][0]+=2
-            for i in range(1,len(graph)):
-                graph[i][1]=[i-1]
-            global_graph.extend(graph)
-        return global_graph
-
-
 def _to_tags(sen):
+    '''对应一个句子生成tags'''
     tags=[]
     for w in sen:
         if len(w) == 1:
@@ -249,18 +129,160 @@ def gen_keys(seq, i):
             left2+left+'_3',right+right2+'_4']
 
 
-def cut_the_text(index,src,model_dat,dst):
-    graph2=test_fea(index,src)
+class PerceptronCWS(object):
+    """docstring for PerceptronCWS."""
+    def __init__(self, dataset):
+        super(PerceptronCWS, self).__init__()
+        self.dataset = dataset
+
+        pku = '{}_train'.format(dataset)
+        self.train_dst = os.path.join('.', 'model', pku)
+        self.train_src = os.path.join('..', 'datas', dataset +'.txt')
+        self.index_fpath = self.train_dst[:self.train_dst.rfind('.')] + '.index'
+
+        self.inder = self.get_inder(index_fpath)
+    
+    def get_inder(self, index_fpath):
+        if not os.path.exists(index_fpath):
+            print('begin index...')
+            print('from', self.train_src, 'to', index_fpath)
+            inder = Indexer(index_fpath, 'w')
+            with open(self.train_src, encoding='utf8') as f:
+                for line in tqdm(f.readlines()):
+                    line = line.strip().split()
+                    seq = ''.join(line)
+                    graph = []
+                    fs = [[inder(k) for k in gen_keys(seq, x)] for x in range(len(seq))]
+                    for c, v in zip(_to_tags(line), fs):
+                        graph.append([0, [], c, v])
+                    if not graph:
+                        continue
+                    graph[0][0] += 1
+                    graph[-1][0] += 2
+                    for i in range(1,len(graph)):
+                        graph[i][1]=[i-1]
+                    global_graph.extend(graph)
+
+    def train_it(self):
+        index_fpath = self.train_dst[:self.train_dst.rfind('.')] + '.index'
+        model_fpath = self.train_dst[:self.train_dst.rfind('.')] + '.model'
+        graph, length = self.main_fea(self.train_src, index_fpath)
+        examples = []
+        for i in graph:
+            examples.append((i[3], i[2]))
+        model = self.train(5, examples, length)
+        model.save(model_fpath)
+
+    def main_fea(self, src, index):
+        '''训练文件index文件'''
+        print('begin index...')
+        print('from', src, 'to', index)
+        inder = Indexer(index, 'w') #build indexer
+        global_graph=[]
+
+        with open(src, encoding='utf8') as f:
+            for line in tqdm(f.readlines()):
+                line = line.strip().split()
+                seq = ''.join(line)
+                graph = []
+                fs = [[inder(k) for k in gen_keys(seq, x)] for x in range(len(seq))]
+        
+                for c,v in zip(_to_tags(line),fs):
+                    graph.append([0,[],c,v])
+                if not graph:continue
+                graph[0][0]+=1
+                graph[-1][0]+=2
+                for i in range(1,len(graph)):
+                    graph[i][1]=[i-1]
+                global_graph.extend(graph)
+            return global_graph, len(inder.dict)
+
+    def test_fea(self, index, src):
+        inder = Indexer(index,'r')
+        global_graph=[]
+        with open(src,'r',encoding='utf8') as f:
+            for line in tqdm(f.readlines()):
+                seq=line.strip()
+                graph=[]
+                fs=[filter(lambda x:x>=0,[inder(k) for k in gen_keys(seq,x)]) for x in range(len(seq))]
+                for c,v in zip(_to_tags(line),fs):
+                    graph.append([0,[],c,v])
+                if not graph:continue
+                graph[0][0]+=1
+                graph[-1][0]+=2
+                for i in range(1,len(graph)):
+                    graph[i][1]=[i-1]
+                global_graph.extend(graph)
+            return global_graph
+
+    def train(self, nr_iter, examples, length):
+        '''Return an averaged perceptron model trained on ``examples`` for
+        ``nr_iter`` iterations.
+        '''
+        tt = ['b','e','s','m']
+        model = AveragedPerceptron()
+        for j in range(int(length)):
+            model.weights[str(j)]={tt[i]:0 for i in range(4)}
+        print('begin training...')
+        for i in tqdm(range(nr_iter)):
+            random.shuffle(examples)
+            for features, class_ in examples:
+                guess = model.predict(features)
+                if guess != class_:
+                    model.update(class_, guess, features)
+            print(i,'iter done')
+        model.average_weights()
+        return model
+
+    def cut(self, sentence):
+        seq = sentence.strip()
+        graph = []
+        fs = [list(filter(lambda x: x>=0, [self.inder(k) for k in gen_keys(seq, x)])) for x in range(len(seq))]
+
+        for c, v in zip(_to_tags(seq), fs):
+            graph.append([0, [], c, v])
+        assert len(graph) > 0, 'sentence is null'
+        graph[0][0]+=1
+        graph[-1][0]+=2
+        for i in range(1,len(graph)):
+            graph[i][1]=[i-1]
+        self.model.predict(graph[3])
+
+        
+ 
+
+def test_fea(index, src):
+    inder = Indexer(index,'r')
+    global_graph=[]
+    with open(src,'r',encoding='utf8') as f:
+        for line in tqdm(f.readlines()):
+            seq=line.strip()
+            graph=[]
+            fs=[list(filter(lambda x:x>=0,[inder(k) for k in gen_keys(seq,x)])) for x in range(len(seq))]
+            for c,v in zip(_to_tags(line), fs):
+                graph.append([0,[],c,v])
+            if not graph:continue
+            graph[0][0]+=1
+            graph[-1][0]+=2
+            for i in range(1,len(graph)):
+                graph[i][1]=[i-1]
+            global_graph.extend(graph)
+        return global_graph
+
+def cut_the_text(index, src, model_dat, dst):
+    graph2 = test_fea(index,src)
     model=AveragedPerceptron()
     model.load(model_dat)
-    f=open(src, 'r', encoding='utf8')
+    f = open(src, 'r', encoding='utf8')
     rs=f.readlines()
     data=[]
     for i in graph2:
-        result=model.predict(i[3])
+        print(i[3], 280)
+        result = model.predict(list(i[3]))
+        print(result)
         data.append(result)
     num=0
-    f2=open(dst,'w', encoding='utf8')
+    f2=open(dst, 'w', encoding='utf8')
     for line in rs:
         line=line.strip()
         length=len(line)
@@ -276,9 +298,9 @@ def cut_the_text(index,src,model_dat,dst):
     
 
 def main():
-    # model1 = PerceptronCWS('../datas/pku_training.utf8', './model/pku.model')
+    # model1 = PerceptronCWS('../datas/pku_train.txt', './model/pku.model')
     # model1.train_it()
-    cut_the_text('./model/pku.index', '../datas/pku_test.utf8', './model/pku.model', 'rs.txt')
+    cut_the_text('./model/pku.index', '../datas/pku_test.txt', './model/pku.model', 'rs.txt')
 
 
 if __name__ == '__main__':
