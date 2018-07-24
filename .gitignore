@@ -118,6 +118,6 @@ methods/*
 
 .DS_Store
 
-
+models/perceptron/model/*
 
 icwb2-data/
