@@ -53,6 +53,7 @@ class CWS extends React.Component{
     text: "",
     edit_confirm: false,
     to_do_edit: false,
+
   }
 
   componentWillMount(){
