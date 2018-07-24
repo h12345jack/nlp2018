@@ -225,7 +225,9 @@ def test(dataset='pku'):
             print(model1.cut(line), file=rs)
 
 def main():
-    pass
+    datas = ['pku', 'msr', 'weibo']
+    for dataset in datas:
+        test(dataset)
 
 if __name__ == '__main__':
     main()
