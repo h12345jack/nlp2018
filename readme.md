@@ -7,28 +7,31 @@
 行测试分析。如果在本题目中不考虑命名实体识别问题，歧义消解和集外词
 处理是汉语自动分词中的关键问题
 
-## datas 
+## Datas 
 - [ ] [icwb2-data](http://sighan.cs.uchicago.edu/bakeoff2005/)
 
 - [ ] [NLPCC2016-WordSeg-Weibo](https://github.com/FudanNLP/NLPCC-WordSeg-Weibo)
 
-## methods
+## Methods
 - [x] 最大正向匹配 hjj
 - [x] perceptron hjj
 - [x] CRF++ wj
 - [ ] Bi-LSTM hl&hjj
-- [ ] HMM & hl
+- [x] HMM & hl
 - [ ] Bi-LSTM+CRF hl
 
 
-## 实验：
-PKU MSRA
-WeiBo，领域自适应
+## Experiment：
+PKU MSRA: 标准数据集
+
+WeiBo： 非标准数据集
 
 ## System Design
 
 - [ ] SPA-Form Page
 - [ ] Results Page
+- [x] Feedback
+
 
 UI和WebDM类似
 反馈机制，前端
@@ -40,3 +43,7 @@ UI和WebDM类似
 https://github.com/hankcs/multi-criteria-cws
 
 http://jkx.fudan.edu.cn/~qzhang/paper/aaai2017-cws.pdf
+
+http://www.shizhuolin.com/2018/05/29/2920.html
+
+
