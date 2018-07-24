@@ -45,7 +45,7 @@ class MaxMatch(object):
         wl = []
         while now < sen_len:
             pku = min(self.max_len, sen_len-now)
-            for i in range(self.max_len, 0, -1):
+            for i in range(pku, 0, -1):
                 word = sentence[now: now+i]
                 if word in self.dict or i == 1:
                     wl.append(word)
