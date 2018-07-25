@@ -110,10 +110,10 @@ def gen_keys(seq, i):
 
 class PerceptronCWS(object):
     """docstring for PerceptronCWS."""
-    def __init__(self, dataset):
+    def __init__(self, dataset, iters=20):
         super(PerceptronCWS, self).__init__()
         self.dataset = dataset
-
+        self.iters = iters
         pku = '{}_train'.format(dataset)
         self.train_src = os.path.join(UPPER_DIR, 'datas', pku +'.txt')
         self.model_path = os.path.join(CUR_DIR, 'model', pku + '.model')
@@ -168,7 +168,7 @@ class PerceptronCWS(object):
                     global_graph.extend(graph)
             print('index done!')
             examples = [(i[3], i[2]) for i in global_graph]
-            model = self.train(5, examples, len(self.dic))
+            model = self.train(self.iters, examples, len(self.dic))
             model.save(self.model_path)
         else:
             model=AveragedPerceptron()
@@ -221,14 +221,26 @@ class PerceptronCWS(object):
 def test(dataset='pku'):
     model1 = PerceptronCWS(dataset)
     print('data loaded!')
-    rs = open('./results/perceptron-{}.txt'.format(dataset), 'w', encoding='utf8')
+    rs = open('../results/perceptron-{}.txt'.format(dataset), 'w', encoding='utf8')
     with open('../datas/{}_test.txt'.format(dataset), encoding='utf8') as f:
         for line in f.readlines():
             line = line.strip()
             print(model1.cut(line), file=rs)
 
+def special_test():
+    model = PerceptronCWS('pku')
+    rs = open('../results/perceptron-pku2weibo.txt', 'w', encoding='utf8')
+    with open('../datas/weibo_test.txt', encoding='utf8') as f:
+        for line in f.readlines():
+            line = line.strip()
+            print(model.cut(line), file=rs)
+
 def main():
-    pass
+    # datas = ['pku', 'msr', 'weibo']
+    # for dataset in datas:
+    #     test(dataset)
+    test('weibo')
+    special_test()
 
 if __name__ == '__main__':
     main()

@@ -73,7 +73,7 @@ target/
 .ipynb_checkpoints
 
 # pyenv
-.python-version
+# .python-version
 
 # celery beat schedule file
 celerybeat-schedule
@@ -119,5 +119,6 @@ methods/*
 .DS_Store
 
 models/perceptron/model/*
+
 
 icwb2-data/
