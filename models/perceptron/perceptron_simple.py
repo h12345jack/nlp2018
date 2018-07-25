@@ -8,6 +8,9 @@ import random
 
 from tqdm import tqdm
 
+CUR_DIR = os.path.abspath(os.path.dirname(__file__))
+UPPER_DIR = os.path.join(CUR_DIR, '..')
+
 class AveragedPerceptron(object):
     """docstring for Perceptron."""
     def __init__(self):
@@ -112,8 +115,8 @@ class PerceptronCWS(object):
         self.dataset = dataset
 
         pku = '{}_train'.format(dataset)
-        self.train_src = os.path.join('..', 'datas', pku +'.txt')
-        self.model_path = os.path.join('.', 'model', pku + '.model')
+        self.train_src = os.path.join(UPPER_DIR, 'datas', pku +'.txt')
+        self.model_path = os.path.join(CUR_DIR, 'model', pku + '.model')
         self.index_fpath = self.model_path[:self.model_path.rfind('.')] + '.index'
 
 
@@ -212,7 +215,7 @@ class PerceptronCWS(object):
                 results.append(char + ' ')
             else:
                 results.append(char)
-        return ''.join(results)   
+        return ''.join(results).strip()   
  
 
 def test(dataset='pku'):

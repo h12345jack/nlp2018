@@ -17,7 +17,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
+import Snackbar from '@material-ui/core/Snackbar';
+
 import CWS from '../components/cws';
+import MySnackbarContent from '../components/MySnackbarContent';
+
+import {sentenceCut} from '../api.js';
+
 
 
 const styles = {
@@ -33,10 +39,13 @@ const styles = {
 
 class System extends Component {
     state = {
-        text: '成为专业程序员的6个技巧',
-        loading: false,
+        text: '【神秘中国财团本周或买下AC米兰，代价超10亿欧元】',
         model: "hmm",
-        dataset: "pku"
+        dataset: "pku",
+        
+        loading: false,
+
+        error_open: true,
     }
 
     handleTextChange = (e)=>{
@@ -46,6 +55,12 @@ class System extends Component {
         })
     }
 
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        this.setState({ error_open: false });
+    };
     handleModelChange = (e)=>{
         const value = e.target ? e.target.value: e;
         this.setState({
@@ -58,6 +73,10 @@ class System extends Component {
         this.setState({
             dataset: value
         })
+    }
+
+    handleSubmit = ()=>{
+        
     }
 
     render(){
@@ -83,14 +102,7 @@ class System extends Component {
                         fullWidth
                         margin="normal"
                     />
-                    {/* <Grid container spacing={24}>
-                <Grid item xs={12}>
-                <Paper className={classes.paper}>xs=12</Paper>
-                </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>xs=12 sm=6</Paper>
-        </Grid> */}
-                       <FormControl component="fieldset" required className={classes.formControl}>
+                    <FormControl component="fieldset" required className={classes.formControl}>
                         <FormLabel component="label" style={{fontSize: '0.75em'}}>模型选择</FormLabel>
                         <RadioGroup
                             aria-label="模型选择"
@@ -129,6 +141,21 @@ class System extends Component {
                     </Button>
                     </div>
                     <CWS />
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        open={this.state.error_open}
+                        autoHideDuration={6000}
+                        onClose={this.handleClose}
+                        >
+                        <MySnackbarContent
+                            onClose={this.handleClose}
+                            variant="error"
+                            message="生活难免错误，代码也是。"
+                        />
+                    </Snackbar>
                 </div>
 
     }

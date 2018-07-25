@@ -4,16 +4,17 @@ import os
 from collections import defaultdict
 import pickle
 
-
+CUR_DIR = os.path.abspath(os.path.dirname(__file__))
+UPPER_DIR = os.path.join(CUR_DIR, '..')
 
 class MaxMatch(object):
     def __init__(self, dataset, reverse=False):
         data_set_pku = '{}_train'.format(dataset)
         pku = data_set_pku+'-reverse.dict' if reverse else data_set_pku+'.dict'
-        self.dict_file = os.path.join('.', 'model', pku)
+        self.dict_file = os.path.join(CUR_DIR, 'model', pku)
 
         self.dataset = dataset
-        self.dataset_path = os.path.join('..', 'datas', dataset+'.txt')
+        self.dataset_path = os.path.join(UPPER_DIR, 'datas', dataset+'.txt')
         self.reverse = reverse
         self.dict, self.max_len = self.build_dict(dataset)
 
@@ -74,7 +75,6 @@ def dataset_cut(dataset = 'weibo'):
             print(" ".join(wl), file=rs_f)
 def main():
     special_cut()
-
 
 if __name__ == '__main__':
 	main()

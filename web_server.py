@@ -26,7 +26,7 @@ def cut(sentence, model, dataset):
 		pass
 
 @app.route('/api/cws', methods=['POST', 'GET'])
-def index():
+def cws():
 	if request.method == 'POST':
 		sentence = request.form.get('sentence', '')
 		model = request.form.get('model', None)
