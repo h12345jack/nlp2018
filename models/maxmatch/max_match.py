@@ -54,7 +54,7 @@ class MaxMatch(object):
                     break
         if self.reverse:
             wl = wl[::-1]
-        return wl
+        return " ".join(wl).strip()
 
 def special_cut():
     dataset = 'pku'
