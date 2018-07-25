@@ -108,7 +108,7 @@ ENV/
 *.swo
 
 # datadir
-datas/
+!models/datas/
 
 .vscode/
 

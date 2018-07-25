@@ -11,7 +11,8 @@ from flask import request
 
 
 from models.maxmatch.max_match import MaxMatch
-
+from models.hmm.hmm import HiddenMarkovModel, HMM
+from models.perceptron.perceptron_simple import PerceptronCWS
 app = Flask(__name__, template_folder = 'website/build', static_folder='website/build/static') 
 CORS(app)
 
@@ -22,9 +23,13 @@ def cut(sentence, model, dataset):
 		rs = tmp.cut(sentence)
 		return rs
 	elif model == 'perceptron':
-		pass
+		tmp = PerceptronCWS(dataset)
+		rs = tmp.cut(sentence)
+		return rs
 	elif model == 'hmm':
-		pass
+		tmp = HMM(dataset)
+		rs = tmp.cut(sentence)
+		return rs
 	elif model == 'crf':
 		pass
 	elif model == 'bilstm':
