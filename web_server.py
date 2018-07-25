@@ -10,12 +10,17 @@ from flask_cors import CORS
 from flask import request
 
 
+from models.maxmatch.max_match import MaxMatch
+
 app = Flask(__name__, template_folder = 'website/build', static_folder='website/build/static') 
 CORS(app)
 
 def cut(sentence, model, dataset):
 	if model == 'mm':
-		pass
+		print(sentence, 20)
+		tmp = MaxMatch(dataset)
+		rs = tmp.cut(sentence)
+		return rs
 	elif model == 'perceptron':
 		pass
 	elif model == 'hmm':
@@ -28,10 +33,14 @@ def cut(sentence, model, dataset):
 @app.route('/api/cws', methods=['POST', 'GET'])
 def cws():
 	if request.method == 'POST':
-		sentence = request.form.get('sentence', '')
-		model = request.form.get('model', None)
-		data = request.form.get('data', '')
-		cutted = cut(sentence, model, data)
+		print(request, 36)
+		req = request.json
+		print(req, 37)
+		sentence = req.get('sentence', '')
+		model = req.get('model', 'mm')
+		dataset = req.get('dataset', 'pku')
+		cutted = cut(sentence, model, dataset)
+		print(cutted, 39)
 		return jsonify(result=cutted)
 	else:
 		return render_template('index.html')
@@ -39,6 +48,7 @@ def cws():
 @app.route('/', methods=['GET'])
 def index():
     return render_template("index.html")
+
 
 
 if __name__ == '__main__':

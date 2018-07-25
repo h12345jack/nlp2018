@@ -40,12 +40,12 @@ const styles = {
 class System extends Component {
     state = {
         text: '【神秘中国财团本周或买下AC米兰，代价超10亿欧元】',
-        model: "hmm",
+        model: "mm",
         dataset: "pku",
-        
-        loading: false,
+        sen_cutted: "",
 
-        error_open: true,
+        loading: false,
+        error_open: false,
     }
 
     handleTextChange = (e)=>{
@@ -76,7 +76,31 @@ class System extends Component {
     }
 
     handleSubmit = ()=>{
-        
+        this.setState({
+            loading: true,
+            sen_cutted: ""
+          })
+        console.log(this.state, 83)
+        return new Promise((resolve, reject) => {
+            sentenceCut({
+              model: this.state.model,
+              sentence: this.state.text,
+              dataset: this.state.dataset
+            }).then(res=>{
+              this.setState({
+                loading: false,
+                sen_cutted: res.data.result,
+              })
+              resolve(res)
+            }).catch(err=>{
+              this.setState({
+                loading: false,
+                sen_cutted: "",
+                error_open: true
+              });
+              reject(err);
+            })
+          })
     }
 
     render(){
@@ -112,9 +136,10 @@ class System extends Component {
                             onChange={this.handleModelChange}
                             row
                         >
+                            <FormControlLabel value="mm" control={<Radio />} label="MaxMatch" />
                             <FormControlLabel value="hmm" control={<Radio />} label="HMM" />
                             <FormControlLabel value="perceptron" control={<Radio />} label="Perceptron" />
-                            <FormControlLabel value="lstm" control={<Radio />} label="LSTM" />
+                            <FormControlLabel value="bilstm" control={<Radio />} label="LSTM" />
                             <FormControlLabel value="crf" control={<Radio />} label="CRF" />
                         </RadioGroup>
                         </FormControl>
@@ -136,11 +161,12 @@ class System extends Component {
 
 
                     <div style={{textAlign: 'right'}}>
-                    <Button size="large" color="primary" variant="outlined">
+                    <Button size="large" color="primary" variant="outlined" onClick={this.handleSubmit}>
                        提交
                     </Button>
                     </div>
-                    <CWS />
+                    
+                    {this.state.sen_cutted && <CWS text={this.state.sen_cutted}/>}
                     <Snackbar
                         anchorOrigin={{
                             vertical: 'bottom',

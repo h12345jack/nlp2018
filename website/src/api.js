@@ -8,7 +8,7 @@ export function sentenceCut(item){
     }
     return axios({
           method: 'post',
-          url: 'http://127.0.0.1:5000/api/message',
+          url: 'http://127.0.0.1:5000/api/cws',
           data: params
       })
 }
