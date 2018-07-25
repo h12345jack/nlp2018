@@ -34,6 +34,16 @@ UI和WebDM类似
 反馈机制，前端完成
 
 
+## Install
+
+```
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+注：crf需要额外的安装库，见[说明](./models/crf/readme.md)
+
+
 ## Acknowledge
 
 ###  相关资料
