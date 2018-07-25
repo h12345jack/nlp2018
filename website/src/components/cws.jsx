@@ -51,6 +51,7 @@ const styles = {
 class CWS extends React.Component{
   state = {
     text: "",
+    sen_cutted: "",
     edit_confirm: false,
     to_do_edit: false,
 
@@ -58,7 +59,8 @@ class CWS extends React.Component{
 
   componentWillMount(){
     this.setState({
-      text: "【 神秘 中国 财团 本周 或 买下 AC米兰 ， 代价 超 10亿 欧元 】"
+      text: this.props.text,
+      sen_cutted: this.props.text,
     })
   }
 
@@ -73,8 +75,8 @@ class CWS extends React.Component{
     const { classes } = this.props;
     const bull = <span className={classes.bullet}>•</span>;
 
-    const sen_cutted = "【 神秘 中国 财团 本周 或 买下 AC米兰 ， 代价 超 10亿 欧元 】";
-
+    const sen_cutted = this.props.text;
+    console.log(sen_cutted, 79)
     const words = sen_cutted.split(' ');
     return <div className={classes.result}>
       <Typography className={classes.title} variant="headline" component="h2">

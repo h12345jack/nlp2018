@@ -10,7 +10,11 @@ from tqdm import tqdm
 
 CUR_DIR = os.path.abspath(os.path.dirname(__file__))
 UPPER_DIR = os.path.join(CUR_DIR, '..')
+MODEL_DIR = os.path.join(CUR_DIR, 'model')
+if not os.path.exists(MODEL_DIR):
+    os.mkdir(MODEL_DIR)
 
+    
 class AveragedPerceptron(object):
     """docstring for Perceptron."""
     def __init__(self):
