@@ -45,7 +45,8 @@ class System extends Component {
         sen_cutted: "",
 
         loading: false,
-        error_open: false,
+        error: false,
+        uploaded: false,
     }
 
     handleTextChange = (e)=>{
@@ -55,11 +56,11 @@ class System extends Component {
         })
     }
 
-    handleClose = (event, reason) => {
+    handleClose = (event, reason, state_name='error') => {
         if (reason === 'clickaway') {
           return;
         }
-        this.setState({ error_open: false });
+        this.setState({ [state_name]: false });
     };
     handleModelChange = (e)=>{
         const value = e.target ? e.target.value: e;
@@ -96,7 +97,7 @@ class System extends Component {
               this.setState({
                 loading: false,
                 sen_cutted: "",
-                error_open: true
+                error: true
               });
               reject(err);
             })
@@ -139,7 +140,7 @@ class System extends Component {
                             <FormControlLabel value="mm" control={<Radio />} label="MaxMatch" />
                             <FormControlLabel value="hmm" control={<Radio />} label="HMM" />
                             <FormControlLabel value="perceptron" control={<Radio />} label="Perceptron" />
-                            <FormControlLabel value="bilstm" control={<Radio />} label="LSTM" />
+                            <FormControlLabel value="bilstm" control={<Radio />} label="BiLSTM+CRF" />
                             <FormControlLabel value="crf" control={<Radio />} label="CRF" />
                         </RadioGroup>
                         </FormControl>
@@ -166,13 +167,13 @@ class System extends Component {
                     </Button>
                     </div>
                     
-                    {this.state.sen_cutted && <CWS text={this.state.sen_cutted}/>}
+                    {this.state.sen_cutted && <CWS text={this.state.sen_cutted} handleUpload={()=>this.setState({uploaded: true}, ()=>console.log(this.state, 170))}/>}
                     <Snackbar
                         anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'center',
                         }}
-                        open={this.state.error_open}
+                        open={this.state.error}
                         autoHideDuration={6000}
                         onClose={this.handleClose}
                         >
@@ -181,7 +182,28 @@ class System extends Component {
                             variant="error"
                             message="生活难免错误，代码也是。"
                         />
+                        
+                        
                     </Snackbar>
+
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                        open={this.state.uploaded}
+                        autoHideDuration={2000}
+                        onClose={(e, reason)=> this.handleClose(e, reason, "uploaded")}
+                        >
+                         <MySnackbarContent
+                            onClose={(e, reason)=> this.handleClose(e, reason, "uploaded")}
+                            variant="success"
+                            message="您的数据已上传，感谢您的反馈，让我们一起使得分词更好！"
+                        />
+                        
+                        
+                    </Snackbar>
+
                 </div>
 
     }

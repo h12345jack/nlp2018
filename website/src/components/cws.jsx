@@ -121,7 +121,7 @@ class CWS extends React.Component{
                                   return <span className={classes.seg}>{item}</span>
                               }),
                           <Icon type="edit" onClick={()=>{this.setState({edit_confirm:false})}}/>,
-                          <Icon type="cloud-upload-o" style={{marginLeft: 10}}/>  
+                          <Icon type="cloud-upload-o" style={{marginLeft: 10}} onClick={()=>{this.props.handleUpload(); console.log(124)}}/>  
                           ]
                         : [<TextField
                               id="multiline-flexible"

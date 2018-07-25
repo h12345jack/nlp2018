@@ -14,7 +14,7 @@ MODEL_DIR = os.path.join(CUR_DIR, 'model')
 if not os.path.exists(MODEL_DIR):
     os.mkdir(MODEL_DIR)
 
-    
+
 class AveragedPerceptron(object):
     """docstring for Perceptron."""
     def __init__(self):
@@ -114,7 +114,7 @@ def gen_keys(seq, i):
 
 class PerceptronCWS(object):
     """docstring for PerceptronCWS."""
-    def __init__(self, dataset, iters=20):
+    def __init__(self, dataset, iters=5):
         super(PerceptronCWS, self).__init__()
         self.dataset = dataset
         self.iters = iters

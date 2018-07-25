@@ -13,7 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import {Icon} from 'antd';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -220,6 +221,9 @@ class App extends Component {
 
           </main>
           {after}
+          <div style={{position: 'fixed', textAlign: 'center', bottom: 5, width: '100%'}}>
+            NLP2018 <Icon type="heart" /> Powerby Hjj, Hl and Wj
+          </div>
         </div>
       </div>
     );
