@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import numpy as np 
-import gensim
 import pickle
 import os
 
@@ -24,7 +23,7 @@ def log_sum_exp(vec): # batch x tagset
 	max_score_broadcast = max_score.view(batch_size, -1).expand(batch_size, vec.size()[1])
 	return max_score + \
 		torch.log(torch.sum(torch.exp(vec - max_score_broadcast), 1)) # batch
-		
+
 
 def prepare_sequence(seq, to_idx):
 	idxs = [to_idx[w] if w in to_idx else 0 for w in seq]
