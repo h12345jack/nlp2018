@@ -153,7 +153,7 @@ class PerceptronCWS(object):
             print('begin index')
             self.inder_file.close()
             os.remove(self.index_fpath)
-            self.inder_file = open(self.index_fpath, 'a')
+            self.inder_file = open(self.index_fpath, 'a', encoding='utf8')
             global_graph = []
             with open(self.train_src, encoding='utf8') as f:
                 for line in tqdm(f.readlines()):

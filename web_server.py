@@ -8,7 +8,7 @@ from flask import render_template
 from flask import jsonify
 from flask_cors import CORS
 from flask import request
-
+import webbrowser
 
 from models.maxmatch.max_match import MaxMatch
 from models.hmm.hmm import HiddenMarkovModel, HMM
@@ -57,4 +57,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+	webbrowser.open("http://127.0.0.1:5000")
+	app.run(debug=True)
