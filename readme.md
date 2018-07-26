@@ -19,19 +19,17 @@ Weibo: 非标准数据集
 - [x] 最大正向匹配 hjj
 - [x] perceptron hjj
 - [x] CRF++ wj
-- [ ] Bi-LSTM hl&hjj
 - [x] HMM & hl
-- [ ] Bi-LSTM+CRF hl
+- [x] Bi-LSTM+CRF hl
 
 ## System Design
 
-- [ ] SPA-Form Page
-- [ ] Results Page
-- [x] Feedback
+- [x] SPA-Form Page
+- [x] Results Page
+- [ ] Feedback (反馈机制，前端完成)
 
+![](./imgs/system.gif)
 
-UI和WebDM类似
-反馈机制，前端完成
 
 
 ## Install
