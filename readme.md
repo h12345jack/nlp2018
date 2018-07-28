@@ -42,7 +42,7 @@ pip install -r requirements.txt
 注：crf需要额外的安装库，见[说明](./models/crf/readme.md)
 
 
-## Acknowledge
+
 
 ###  相关资料
 https://github.com/hankcs/multi-criteria-cws
